@@ -139,3 +139,4 @@ resource "oci_core_public_ip" "public_ip_1" {
 }
 
 
+
