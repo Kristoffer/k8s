@@ -1,0 +1,7 @@
+# OpenTofu/Terraform state — may contain resource IDs, IPs, secrets
+*.tfstate
+*.tfstate.backup
+
+# Local cache and provider binaries
+.terraform/
+.terraform.lock.hcl
