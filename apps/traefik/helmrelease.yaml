@@ -19,3 +19,5 @@ spec:
     ports:
       web:
         nodePort: 31600
+      websecure:
+        nodePort: 31601
