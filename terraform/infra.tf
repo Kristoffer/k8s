@@ -132,6 +132,34 @@ resource "oci_network_load_balancer_listener" "nlb_listener" {
   protocol                 = "TCP"
 }
 
+resource "oci_network_load_balancer_backend_set" "nlb_backend_set_https" {
+  health_checker {
+    protocol = "TCP"
+    port     = 10256
+  }
+  name                     = "k8s-backend-set-https"
+  network_load_balancer_id = oci_network_load_balancer_network_load_balancer.nlb.id
+  policy                   = "FIVE_TUPLE"
+
+  is_preserve_source = false
+}
+
+resource "oci_network_load_balancer_backend" "nlb_backend_https" {
+  count                    = length(local.active_nodes)
+  backend_set_name         = oci_network_load_balancer_backend_set.nlb_backend_set_https.name
+  network_load_balancer_id = oci_network_load_balancer_network_load_balancer.nlb.id
+  port                     = 31601
+  target_id                = local.active_nodes[count.index].id
+}
+
+resource "oci_network_load_balancer_listener" "nlb_listener_https" {
+  default_backend_set_name = oci_network_load_balancer_backend_set.nlb_backend_set_https.name
+  name                     = "k8s-nlb-listener-https"
+  network_load_balancer_id = oci_network_load_balancer_network_load_balancer.nlb.id
+  port                     = "443"
+  protocol                 = "TCP"
+}
+
 resource "oci_core_public_ip" "public_ip_1" {
   #Required
   compartment_id = var.compartment_id
