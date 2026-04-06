@@ -1,10 +1,10 @@
-resource "kubernetes_deployment" "nginx_deployment" {
+resource "kubernetes_deployment_v1" "nginx_deployment" {
   metadata {
     name = "nginx"
     labels = {
       app = "nginx"
     }
-    namespace = kubernetes_namespace.test.id
+    namespace = kubernetes_namespace_v1.tofu.id
   }
   spec {
     replicas = 1
@@ -32,10 +32,10 @@ resource "kubernetes_deployment" "nginx_deployment" {
   }
 }
 
-resource "kubernetes_service" "nginx_service" {
+resource "kubernetes_service_v1" "nginx_service" {
   metadata {
     name      = "nginx-service"
-    namespace = kubernetes_namespace.test.id
+    namespace = kubernetes_namespace_v1.tofu.id
   }
   spec {
     selector = {

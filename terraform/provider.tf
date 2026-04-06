@@ -27,8 +27,8 @@ provider "kubernetes" {
   config_path = "~/.kube/oci-config"
 }
 
-resource "kubernetes_namespace" "test" {
+resource "kubernetes_namespace_v1" "tofu" {
   metadata {
-    name = "test"
+    name = "tofu"
   }
 }
