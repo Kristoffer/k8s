@@ -25,7 +25,7 @@ module "vcn" {
 
 resource "oci_containerengine_cluster" "k8s_cluster" {
   compartment_id     = var.compartment_id
-  kubernetes_version = "v1.31.1"
+  kubernetes_version = "v1.34.2"
   name               = "k8s-cluster"
   vcn_id             = module.vcn.vcn_id
 
@@ -56,7 +56,7 @@ data "oci_identity_availability_domains" "ads" {
 resource "oci_containerengine_node_pool" "k8s_node_pool" {
   cluster_id         = oci_containerengine_cluster.k8s_cluster.id
   compartment_id     = var.compartment_id
-  kubernetes_version = "v1.31.1"
+  kubernetes_version = "v1.34.2"
   name               = "k8s-node-pool"
   node_config_details {
     placement_configs {
@@ -133,9 +133,9 @@ resource "oci_network_load_balancer_listener" "nlb_listener" {
 }
 
 resource "oci_core_public_ip" "public_ip_1" {
-    #Required
-    compartment_id = var.compartment_id
-    lifetime = "RESERVED"
+  #Required
+  compartment_id = var.compartment_id
+  lifetime       = "RESERVED"
 }
 
 
